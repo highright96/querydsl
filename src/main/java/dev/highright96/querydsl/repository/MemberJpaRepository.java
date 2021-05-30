@@ -39,19 +39,19 @@ public class MemberJpaRepository {
         ).getResultList();
     }
 
+    public List<Member> findByUsername(String username) {
+        return em.createQuery("select m from Member m where m.username = :username", Member.class)
+                .setParameter("username", username)
+                .getResultList();
+    }
+
     public List<Member> findAll_Querydsl() {
         return queryFactory
                 .selectFrom(member)
                 .fetch();
     }
 
-    public List<Member> findByName(String username) {
-        return em.createQuery("select m from Member m where m.username = :username", Member.class)
-                .setParameter("username", username)
-                .getResultList();
-    }
-
-    public List<Member> findByName_Querydsl(String username) {
+    public List<Member> findByUsername_Querydsl(String username) {
         return queryFactory
                 .selectFrom(member)
                 .where(member.username.eq(username))
