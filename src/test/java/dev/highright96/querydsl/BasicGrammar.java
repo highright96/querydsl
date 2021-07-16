@@ -78,12 +78,12 @@ public class BasicGrammar {
 
         //단건 조회
         Member fetchOne = queryFactory
-                .selectFrom(QMember.member)
+                .selectFrom(member)
                 .fetchOne();
 
         //처음 한건 조회
         Member fetchFirst = queryFactory
-                .selectFrom(QMember.member)
+                .selectFrom(member)
                 .fetchFirst();
 
         //페이징 정보 추가 -> 검색 쿼리와 카운트 쿼리 두 개가 실행된다. 따라서 성능 이슈가 있는(조인을 많이하는 쿼리) 쿼리는 count 쿼리를 따로 뺴줘야한다.
@@ -248,7 +248,8 @@ public class BasicGrammar {
         List<Tuple> result = queryFactory
                 .select(member, team)
                 .from(member)
-                .leftJoin(member.team, team).on(team.name.eq("teamA"))
+                .leftJoin(member.team, team)
+                .on(team.name.eq("teamA"))
                 .fetch();
         for (Tuple tuple : result) {
             System.out.println("tuple = " + tuple);
